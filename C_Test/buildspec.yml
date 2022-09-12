@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - yum install -y gcc*
+      - yum install -y make
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Compiling the C++ code...
+      - make
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - aws deploy push --application-name C_Test --s3-location s3://c-build-artifact/artifact.zip --source ./
+artifacts:
+  files:
+    - '**/*'
